@@ -1,7 +1,7 @@
 language: cpp
 
 os:
-  - linux
+  #- linux
   - osx
 
 dist: trusty
@@ -50,7 +50,7 @@ install:
 
 before_script:
   # Skip cppcheck on OSX for now https://github.com/pcolby/bipolar/issues/79 http://trac.cppcheck.net/ticket/7792
-  - '[ "$TRAVIS_OS_NAME" == osx ] || ./.cppcheck.sh'
+  - ./.cppcheck.sh
   - '[[ "$TRAVIS_OS_NAME" != linux || "$CXX" != clang++ ]] || export QMAKESPEC=linux-clang'
   - '[[ "$TRAVIS_OS_NAME" != linux || "$CXX" != g++     ]] || export QMAKESPEC=linux-g++'
   - '[[ "$TRAVIS_OS_NAME" != osx   || "$CXX" != clang++ ]] || export QMAKESPEC=macx-clang'
