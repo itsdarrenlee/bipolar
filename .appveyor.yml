@@ -82,11 +82,11 @@ test_script:
 after_test:
   - ps: >
       if ($env:CONFIGURATION -ne 'debug') {
-        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\release\results.xml))
+        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\results.xml))
       }
   - ps: >
       if ($env:CONFIGURATION -ne 'debug') {
-        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\release\results-de.xml))
+        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\results-de.xml))
       }
 
 artifacts:
