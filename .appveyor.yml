@@ -75,13 +75,19 @@ after_build:
 
 test_script:
   - cd %APPVEYOR_BUILD_FOLDER%-build
-  - if not %CONFIGURATION%==debug %make% check TESTARGS='-o -,txt -o tests.xml,xunitxml'
+  - if not %CONFIGURATION%==debug %make% check 'TESTARGS="-o -,txt -o tests.xml,xunitxml"'
   - if %QTDIR:msvc=%==%QTDIR% ( set "BIPOLAR_TEST_LOCALE=german" ) else set "BIPOLAR_TEST_LOCALE=de-DE"
-  - if not %CONFIGURATION%==debug %make% check TESTARGS='-o tests-de.xml,xunitxml'
+  - if not %CONFIGURATION%==debug %make% check 'TESTARGS="-o tests-de.xml,xunitxml"'
 
 after_test:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\release\tests.xml))
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\release\tests-de.xml))
+  - ps: >
+      if ($env:CONFIGURATION -ne debug) {
+        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path tests.xml))
+      }
+  - ps: >
+      if ($env:CONFIGURATION -ne debug) {
+        (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path tests-de.xml))
+      }
 
 artifacts:
   - path: Bipolar.exe
