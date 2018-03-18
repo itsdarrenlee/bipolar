@@ -75,9 +75,9 @@ after_build:
 
 test_script:
   - cd %APPVEYOR_BUILD_FOLDER%-build
-  - if not %CONFIGURATION%==debug %make% check "TESTARGS='-o -,txt -o %APPVEYOR_BUILD_FOLDER%\results.xml,xunitxml'"
+  - if not %CONFIGURATION%==debug %make% check "TESTARGS=-o -,txt -o %APPVEYOR_BUILD_FOLDER%\results.xml,xunitxml"
   - if %QTDIR:msvc=%==%QTDIR% ( set "BIPOLAR_TEST_LOCALE=german" ) else set "BIPOLAR_TEST_LOCALE=de-DE"
-  - if not %CONFIGURATION%==debug %make% check "TESTARGS='-o %APPVEYOR_BUILD_FOLDER%\results-de.xml,xunitxml'"
+  - if not %CONFIGURATION%==debug %make% check "TESTARGS=-o %APPVEYOR_BUILD_FOLDER%\results-de.xml,xunitxml"
 
 after_test:
   - ps: >
