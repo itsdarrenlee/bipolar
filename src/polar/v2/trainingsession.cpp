@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2017 Paul Colby
+    Copyright 2014-2019 Paul Colby
 
     This file is part of Bipolar.
 
@@ -94,6 +94,142 @@ TrainingSession::TrainingSession(const QString &baseName)
 int TrainingSession::exerciseCount() const
 {
     return (isValid()) ? parsedExercises.count() : -1;
+}
+
+QString TrainingSession::getPolarSportName(const quint64 &polarSportValue)
+{
+    // Tip: sed -nEe 's/.*sports\[([0-9]+)\].*(".*").*/        {\1, QStringLiteral(\2)},/p' file |
+    //          sed -Ee 's/\{([0-9],)/{  \1/' -e 's/\{([0-9]{2},)/{ \1/' */
+    static QMap<quint64, QString> map{
+        {  1, QStringLiteral("Running")},
+        {  2, QStringLiteral("Cycling")},
+        {  3, QStringLiteral("Walking")},
+        {  4, QStringLiteral("Jogging")},
+        {  5, QStringLiteral("Mountain biking")},
+        {  6, QStringLiteral("Skiing")},
+        {  7, QStringLiteral("Downhill skiing")},
+        {  8, QStringLiteral("Rowing")},
+        {  9, QStringLiteral("Nordic walking")},
+        { 10, QStringLiteral("Skating")},
+        { 11, QStringLiteral("Hiking")},
+        { 12, QStringLiteral("Tennis")},
+        { 13, QStringLiteral("Squash")},
+        { 14, QStringLiteral("Badminton")},
+        { 15, QStringLiteral("Strength training")},
+        { 16, QStringLiteral("Other outdoor")},
+        { 17, QStringLiteral("Treadmill running")},
+        { 18, QStringLiteral("Indoor cycling")},
+        { 19, QStringLiteral("Road running")},
+        { 20, QStringLiteral("Circuit training")},
+        { 22, QStringLiteral("Snowboarding")},
+        { 23, QStringLiteral("Swimming")},
+        { 24, QStringLiteral("Freestyle XC skiing")},
+        { 25, QStringLiteral("Classic XC skiing")},
+        { 27, QStringLiteral("Trail running")},
+        { 28, QStringLiteral("Ice skating")},
+        { 29, QStringLiteral("Inline skating")},
+        { 30, QStringLiteral("Roller skating")},
+        { 32, QStringLiteral("Group exercise")},
+        { 33, QStringLiteral("Yoga")},
+        { 34, QStringLiteral("Crossfit")},
+        { 35, QStringLiteral("Golf")},
+        { 36, QStringLiteral("Track&amp;field running")},
+        { 38, QStringLiteral("Road cycling")},
+        { 39, QStringLiteral("Soccer")},
+        { 40, QStringLiteral("Cricket")},
+        { 41, QStringLiteral("Basketball")},
+        { 42, QStringLiteral("Baseball")},
+        { 43, QStringLiteral("Rugby")},
+        { 44, QStringLiteral("Field hockey")},
+        { 45, QStringLiteral("Volleyball")},
+        { 46, QStringLiteral("Ice hockey")},
+        { 47, QStringLiteral("Football")},
+        { 48, QStringLiteral("Handball")},
+        { 49, QStringLiteral("Beach volley")},
+        { 50, QStringLiteral("Futsal")},
+        { 51, QStringLiteral("Floorball")},
+        { 52, QStringLiteral("Dancing")},
+        { 53, QStringLiteral("Trotting")},
+        { 54, QStringLiteral("Riding")},
+        { 55, QStringLiteral("Cross-trainer")},
+        { 56, QStringLiteral("Fitness martial arts")},
+        { 57, QStringLiteral("Functional training")},
+        { 58, QStringLiteral("Bootcamp")},
+        { 59, QStringLiteral("Freestyle roller skiing")},
+        { 60, QStringLiteral("Classic roller skiing")},
+        { 61, QStringLiteral("Aerobics")},
+        { 62, QStringLiteral("Aqua fitness")},
+        { 63, QStringLiteral("Step workout")},
+        { 64, QStringLiteral("Body&amp;Mind")},
+        { 65, QStringLiteral("Pilates")},
+        { 66, QStringLiteral("Stretching")},
+        { 67, QStringLiteral("Fitness dancing")},
+        { 68, QStringLiteral("Triathlon")},
+        { 69, QStringLiteral("Duathlon")},
+        { 70, QStringLiteral("Off-road triathlon")},
+        { 71, QStringLiteral("Off-road duathlon")},
+        { 83, QStringLiteral("Other indoor")},
+        { 84, QStringLiteral("Orienteering")},
+        { 85, QStringLiteral("Ski orienteering")},
+        { 86, QStringLiteral("Mountain bike orienteering")},
+        { 87, QStringLiteral("Biathlon")},
+        { 88, QStringLiteral("Sailing")},
+        { 89, QStringLiteral("Wheelchair racing")},
+        { 90, QStringLiteral("Disc golf")},
+        { 91, QStringLiteral("Table tennis")},
+        { 92, QStringLiteral("Ultra running")},
+        { 94, QStringLiteral("Climbing (indoor)")},
+        { 95, QStringLiteral("Kayaking")},
+        { 96, QStringLiteral("Canoeing")},
+        {100, QStringLiteral("Kitesurfing")},
+        {101, QStringLiteral("Windsurfing")},
+        {102, QStringLiteral("Surfing")},
+        {103, QStringLiteral("Pool swimming")},
+        {104, QStringLiteral("Finnish baseball")},
+        {105, QStringLiteral("Open water swimming")},
+        {107, QStringLiteral("Wakeboarding")},
+        {108, QStringLiteral("Water skiing")},
+        {109, QStringLiteral("Boxing")},
+        {110, QStringLiteral("Kickboxing")},
+        {111, QStringLiteral("Mobility (dynamic)")},
+        {112, QStringLiteral("Telemark skiing")},
+        {113, QStringLiteral("Backcountry skiing")},
+        {114, QStringLiteral("Gymnastics")},
+        {115, QStringLiteral("Judo")},
+        {116, QStringLiteral("Snowshoe trekking")},
+        {117, QStringLiteral("Indoor rowing")},
+        {118, QStringLiteral("Spinning")},
+        {119, QStringLiteral("Street")},
+        {120, QStringLiteral("Latin")},
+        {121, QStringLiteral("Show")},
+        {122, QStringLiteral("Ballet")},
+        {123, QStringLiteral("Jazz")},
+        {124, QStringLiteral("Modern")},
+        {125, QStringLiteral("Ballroom")},
+        {126, QStringLiteral("Core")},
+        {127, QStringLiteral("Mobility (static)")},
+        {128, QStringLiteral("LES MILLS BODYPUMP")},
+        {129, QStringLiteral("LES MILLS BODYATTACK")},
+        {130, QStringLiteral("LES MILLS BODYCOMBAT")},
+        {131, QStringLiteral("LES MILLS GRIT Cardio")},
+        {132, QStringLiteral("LES MILLS GRIT Strength")},
+        {133, QStringLiteral("LES MILLS GRIT Plyo")},
+        {134, QStringLiteral("LES MILLS SH&#x27;BAM")},
+        {135, QStringLiteral("LES MILLS RPM")},
+        {136, QStringLiteral("LES MILLS BODYJAM")},
+        {137, QStringLiteral("LES MILLS BODYSTEP")},
+        {138, QStringLiteral("LES MILLS SPRINT")},
+        {139, QStringLiteral("LES MILLS TONE")},
+        {140, QStringLiteral("LES MILLS BODYBALANCE")},
+        {141, QStringLiteral("LES MILLS THE TRIP")},
+        {142, QStringLiteral("LES MILLS CXWORX")},
+        {143, QStringLiteral("LES MILLS BARRE")},
+    };
+    QMap<quint64, QString>::ConstIterator iter = map.constFind(polarSportValue);
+    if (iter == map.constEnd()) {
+        qWarning() << "Unknown polar sport value" << polarSportValue;
+    }
+    return (iter == map.constEnd()) ? QString() : iter.value();
 }
 
 #define TCX_RUNNING QLatin1String("Running")
@@ -258,6 +394,7 @@ QString TrainingSession::getTcxSport(const quint64 &polarSportValue)
         map.insert(140, TCX_OTHER);  // LES MILLS BODYBALANCE
         map.insert(141, TCX_BIKING); // LES MILLS THE TRIP
         map.insert(142, TCX_OTHER);  // LES MILLS CXWORX
+        map.insert(143, TCX_OTHER);  // LES MILLS BARRE
     }
     QMap<quint64, QString>::ConstIterator iter = map.constFind(polarSportValue);
     if (iter == map.constEnd()) {
@@ -428,6 +565,57 @@ QVariantMap TrainingSession::parseCreateExercise(QIODevice &data) const
     ADD_FIELD_INFO("19/2",     "minutes",           Uint32);
     ADD_FIELD_INFO("19/3",     "seconds",           Uint32);
     ADD_FIELD_INFO("19/4",     "milliseconds",      Uint32);
+    ADD_FIELD_INFO("20",       "accumulated-torque",            Uint32);
+    ADD_FIELD_INFO("21",       "cycling-power-energy",          Uint32);
+    ADD_FIELD_INFO("22",       "sensor-calibration-offset",     EmbeddedMessage);
+    ADD_FIELD_INFO("22/1",     "sample-source-type",            Enumerator);
+    ADD_FIELD_INFO("22/2",     "speed-cal-offset",              Float);
+    ADD_FIELD_INFO("23",       "device_location",               Enumerator);
+    ADD_FIELD_INFO("24",       "power_sample_source_device",    EmbeddedMessage);
+    ADD_FIELD_INFO("24/1",     "start-index",                   Uint32);
+    ADD_FIELD_INFO("24/2",     "source-device",                 EmbeddedMessage);
+    ADD_FIELD_INFO("24/2/1",   "name",                          String);
+    ADD_FIELD_INFO("24/2/2",   "manufacturer",                  String);
+    ADD_FIELD_INFO("24/2/3",   "model",                         String);
+    ADD_FIELD_INFO("24/2/4",   "hardware-code",                 String);
+    ADD_FIELD_INFO("24/2/5",   "platform-version",              EmbeddedMessage);
+    ADD_FIELD_INFO("24/2/5/1", "major",                         Uint32);
+    ADD_FIELD_INFO("24/2/5/2", "minor",                         Uint32);
+    ADD_FIELD_INFO("24/2/5/3", "patch",                         Uint32);
+    ADD_FIELD_INFO("24/2/5/4", "specifier",                     String);
+    ADD_FIELD_INFO("24/2/6",   "software-version",              EmbeddedMessage);
+    ADD_FIELD_INFO("24/2/6/1", "major",                         Uint32);
+    ADD_FIELD_INFO("24/2/6/2", "minor",                         Uint32);
+    ADD_FIELD_INFO("24/2/6/3", "patch",                         Uint32);
+    ADD_FIELD_INFO("24/2/6/4", "specifier",                     String);
+    ADD_FIELD_INFO("24/2/7",   "polarmathsmart-version",        EmbeddedMessage);
+    ADD_FIELD_INFO("24/2/7/1", "major",                         Uint32);
+    ADD_FIELD_INFO("24/2/7/2", "minor",                         Uint32);
+    ADD_FIELD_INFO("24/2/7/3", "patch",                         Uint32);
+    ADD_FIELD_INFO("24/2/7/4", "specifier",                     String);
+    ADD_FIELD_INFO("24/2/8",   "collector",                     EmbeddedMessage); // This one is recursive!
+    ADD_FIELD_INFO("25",       "cardio-load",                   EmbeddedMessage);
+    ADD_FIELD_INFO("25/1",     "activity-load",                 Float);
+    ADD_FIELD_INFO("25/2",     "exercise-load",                 Float);
+    ADD_FIELD_INFO("26",       "cardio-load-interpretation",    Uint32);
+    ADD_FIELD_INFO("27",       "perceived-load",                EmbeddedMessage);
+    ADD_FIELD_INFO("27/1",     "session-rpe",                   Enumerator);
+    ADD_FIELD_INFO("27/2",     "duration",                      Uint32);
+    ADD_FIELD_INFO("28",       "perceived-load-interpretation", Uint32);
+    ADD_FIELD_INFO("29",       "musle-load",                    Float);
+    ADD_FIELD_INFO("30",       "muscle-load-interpretation",    Uint32);
+    ADD_FIELD_INFO("100",      "modified",                      EmbeddedMessage);
+    ADD_FIELD_INFO("100/1",    "date",                          EmbeddedMessage);
+    ADD_FIELD_INFO("100/1/1",  "year",                          Uint32);
+    ADD_FIELD_INFO("100/1/2",  "month",                         Uint32);
+    ADD_FIELD_INFO("100/1/3",  "day",                           Uint32);
+    ADD_FIELD_INFO("100/2",    "time",                          EmbeddedMessage);
+    ADD_FIELD_INFO("100/2/1",  "hour",                          Uint32);
+    ADD_FIELD_INFO("100/2/2",  "minute",                        Uint32);
+    ADD_FIELD_INFO("100/2/3",  "seconds",                       Uint32);
+    ADD_FIELD_INFO("100/2/4",  "milliseconds",                  Uint32);
+    ADD_FIELD_INFO("100/3",    "trusted",                       Bool);
+
     ProtoBuf::Message parser(fieldInfo);
 
     if (isGzipped(data)) {
@@ -535,6 +723,19 @@ QVariantMap TrainingSession::parseCreateSession(QIODevice &data) const
     ADD_FIELD_INFO("21/2/1/1", "year",             Uint32);
     ADD_FIELD_INFO("21/2/1/2", "month",            Uint32);
     ADD_FIELD_INFO("21/2/1/3", "day",              Uint32);
+    ADD_FIELD_INFO("22",       "application-id",                EmbeddedMessage);
+    ADD_FIELD_INFO("22/1",     "value",                         Uint64);
+    ADD_FIELD_INFO("23",       "cardio-load",                   EmbeddedMessage);
+    ADD_FIELD_INFO("23/1",     "activity-load",                 Float);
+    ADD_FIELD_INFO("23/2",     "exercise-load",                 Float);
+    ADD_FIELD_INFO("24",       "cardio-load-interpretation",    Uint32);
+    ADD_FIELD_INFO("25",       "perceived-load",                EmbeddedMessage);
+    ADD_FIELD_INFO("25/1",     "session-rpe",                   Enumerator);
+    ADD_FIELD_INFO("25/2",     "duration",                      Uint32);
+    ADD_FIELD_INFO("26",       "perceived-load-interpretation", Uint32);
+    ADD_FIELD_INFO("27",       "musle-load",                    Float);
+    ADD_FIELD_INFO("28",       "muscle-load-interpretation",    Uint32);
+
     ProtoBuf::Message parser(fieldInfo);
 
     if (isGzipped(data)) {
@@ -596,8 +797,8 @@ QVariantMap TrainingSession::parseLaps(QIODevice &data) const
     ADD_FIELD_INFO("1/2/7/1",  "average",          Uint32);
     ADD_FIELD_INFO("1/2/8",    "swimming",         EmbeddedMessage);
     ADD_FIELD_INFO("1/2/8/1",  "strokes",          Uint32);
-    ADD_FIELD_INFO("1/2/8/1",  "pool-count",       Uint32);
-    ADD_FIELD_INFO("1/2/8/1",  "average-duration", Float);
+    ADD_FIELD_INFO("1/2/8/2",  "pool-count",       Uint32);
+    ADD_FIELD_INFO("1/2/8/3",  "average-duration", Float);
     ADD_FIELD_INFO("1/2/9",    "left-right-balance", EmbeddedMessage);
     ADD_FIELD_INFO("1/2/9/1",  "average",          Float);
     ADD_FIELD_INFO("2",        "summary",          EmbeddedMessage);
@@ -676,6 +877,7 @@ QVariantMap TrainingSession::parsePhysicalInformation(QIODevice &data) const
     ADD_FIELD_INFO("3/2/2/3",  "seconds",             Uint32);
     ADD_FIELD_INFO("3/2/2/4",  "milliseconds",        Uint32);
     ADD_FIELD_INFO("3/2/3",    "trusted",             Bool);
+    ADD_FIELD_INFO("3/3",      "source",              Enumerator); // 0=default, 2=user, 3=measured.
     ADD_FIELD_INFO("4",        "height",              EmbeddedMessage);
     ADD_FIELD_INFO("4/1",      "value",               Float);
     ADD_FIELD_INFO("4/2",      "modified",            EmbeddedMessage);
@@ -825,6 +1027,50 @@ QVariantMap TrainingSession::parsePhysicalInformation(QIODevice &data) const
     ADD_FIELD_INFO("15/2/2/4", "milliseconds",        Uint32);
     ADD_FIELD_INFO("15/2/3",   "trusted",             Bool);
     ADD_FIELD_INFO("15/3",     "source",              Enumerator);
+    ADD_FIELD_INFO("16",       "sensor-calibration-offset", EmbeddedMessage);
+    ADD_FIELD_INFO("16/1",     "sample-source-type",  Enumerator);
+    ADD_FIELD_INFO("16/2",     "speed-cal-offset",    Float);
+    ADD_FIELD_INFO("17",       "sleep-goal",          EmbeddedMessage);
+    ADD_FIELD_INFO("17/1",     "sleep-goal-minutes",  Uint32);
+    ADD_FIELD_INFO("17/2",     "modified",            EmbeddedMessage);
+    ADD_FIELD_INFO("17/2/1",   "date",                EmbeddedMessage);
+    ADD_FIELD_INFO("17/2/1/1", "year",                Uint32);
+    ADD_FIELD_INFO("17/2/1/2", "month",               Uint32);
+    ADD_FIELD_INFO("17/2/1/3", "day",                 Uint32);
+    ADD_FIELD_INFO("17/2/2",   "time",                EmbeddedMessage);
+    ADD_FIELD_INFO("17/2/2/1", "hour",                Uint32);
+    ADD_FIELD_INFO("17/2/2/2", "minute",              Uint32);
+    ADD_FIELD_INFO("17/2/2/3", "seconds",             Uint32);
+    ADD_FIELD_INFO("17/2/2/4", "milliseconds",        Uint32);
+    ADD_FIELD_INFO("17/2/3",   "trusted",             Bool);
+    ADD_FIELD_INFO("18",       "running-maximum-aerobic-power", EmbeddedMessage);
+    ADD_FIELD_INFO("18/1",     "value",               Uint32);
+    ADD_FIELD_INFO("18/2",     "modified",            EmbeddedMessage);
+    ADD_FIELD_INFO("18/2/1",   "date",                EmbeddedMessage);
+    ADD_FIELD_INFO("18/2/1/1", "year",                Uint32);
+    ADD_FIELD_INFO("18/2/1/2", "month",               Uint32);
+    ADD_FIELD_INFO("18/2/1/3", "day",                 Uint32);
+    ADD_FIELD_INFO("18/2/2",   "time",                EmbeddedMessage);
+    ADD_FIELD_INFO("18/2/2/1", "hour",                Uint32);
+    ADD_FIELD_INFO("18/2/2/2", "minute",              Uint32);
+    ADD_FIELD_INFO("18/2/2/3", "seconds",             Uint32);
+    ADD_FIELD_INFO("18/2/2/4", "milliseconds",        Uint32);
+    ADD_FIELD_INFO("18/2/3",   "trusted",             Bool);
+    ADD_FIELD_INFO("18/3",     "setting-source",      Enumerator);
+    ADD_FIELD_INFO("19",       "running-maximum-aerobic-speed", EmbeddedMessage);
+    ADD_FIELD_INFO("19/1",     "value",               Float);
+    ADD_FIELD_INFO("19/2",     "modified",            EmbeddedMessage);
+    ADD_FIELD_INFO("19/2/1",   "date",                EmbeddedMessage);
+    ADD_FIELD_INFO("19/2/1/1", "year",                Uint32);
+    ADD_FIELD_INFO("19/2/1/2", "month",               Uint32);
+    ADD_FIELD_INFO("19/2/1/3", "day",                 Uint32);
+    ADD_FIELD_INFO("19/2/2",   "time",                EmbeddedMessage);
+    ADD_FIELD_INFO("19/2/2/1", "hour",                Uint32);
+    ADD_FIELD_INFO("19/2/2/2", "minute",              Uint32);
+    ADD_FIELD_INFO("19/2/2/3", "seconds",             Uint32);
+    ADD_FIELD_INFO("19/2/2/4", "milliseconds",        Uint32);
+    ADD_FIELD_INFO("19/2/3",   "trusted",             Bool);
+    ADD_FIELD_INFO("19/3",     "setting-source",      Enumerator);
     ADD_FIELD_INFO("100",      "modified",            EmbeddedMessage);
     ADD_FIELD_INFO("100/1",    "date",                EmbeddedMessage);
     ADD_FIELD_INFO("100/1/1",  "year",                Uint32);
@@ -1049,6 +1295,94 @@ QVariantMap TrainingSession::parseSamples(QIODevice &data) const
     ADD_FIELD_INFO("28/2/2/2","minutes",                Uint32);
     ADD_FIELD_INFO("28/2/2/3","seconds",                Uint32);
     ADD_FIELD_INFO("28/2/2/4","milliseconds",           Uint32);
+    ADD_FIELD_INFO("29",         "intervalled-samples",        EmbeddedMessage);
+    ADD_FIELD_INFO("29/1",       "sample-type",                Enumerator);
+    ADD_FIELD_INFO("29/2",       "rec-interval-ms",            Uint32);
+    ADD_FIELD_INFO("29/3",       "sample-source",              EmbeddedMessage);
+    ADD_FIELD_INFO("29/3/1",     "sample-source-type",         Enumerator);
+    ADD_FIELD_INFO("29/3/2",     "start-index",                Uint32);
+    ADD_FIELD_INFO("29/3/3",     "stop-index",                 Uint32);
+    ADD_FIELD_INFO("29/4",       "hr-samples",                 Uint32);
+    ADD_FIELD_INFO("29/5",       "cadence-samples",            Uint32);
+    ADD_FIELD_INFO("29/6",       "speed-samples",              Float);
+    ADD_FIELD_INFO("29/7",       "distance-samples",           Float);
+    ADD_FIELD_INFO("29/8",       "fwd-acceleration",           Float);
+    ADD_FIELD_INFO("29/9",       "moving-type-samples",        Enumerator);
+    ADD_FIELD_INFO("29/10",      "altitude-samples",           Float);
+    ADD_FIELD_INFO("29/11",      "altitude-calibration",       EmbeddedMessage);
+    ADD_FIELD_INFO("29/11/1",    "start-index",                Uint32);
+    ADD_FIELD_INFO("29/11/2",    "value",                      Float);
+    ADD_FIELD_INFO("29/11/3",    "operation",                  Enumerator); // 1=Multiply, 2=Sum
+    ADD_FIELD_INFO("29/11/4",    "cause",                      Enumerator); // 0=Walk, 1=Run, 2=Stand
+    ADD_FIELD_INFO("29/12",      "temperature-samples",        Float);
+    ADD_FIELD_INFO("29/13",      "stride-length-samples",      Uint32);
+    ADD_FIELD_INFO("29/14",      "stride-calibration",         EmbeddedMessage);
+    ADD_FIELD_INFO("29/14/1",    "start-index",                Uint32);
+    ADD_FIELD_INFO("29/14/2",    "value",                      Float);
+    ADD_FIELD_INFO("29/14/3",    "operation",                  Enumerator); // 1=Multiply, 2=Sum
+    ADD_FIELD_INFO("29/14/4",    "cause",                      Enumerator); // 0=Walk, 1=Run, 2=Stand
+    ADD_FIELD_INFO("29/15",      "left-pedal-power-samples",   EmbeddedMessage);
+    ADD_FIELD_INFO("29/15/1",    "current-power",              Int32);
+    ADD_FIELD_INFO("29/15/2",    "cumulative-crank-revs",      Uint32);
+    ADD_FIELD_INFO("29/15/3",    "cumulative-timestamp",       Uint32);
+    ADD_FIELD_INFO("29/15/4",    "min-force-magnitude",        Sint32);
+    ADD_FIELD_INFO("29/15/5",    "max-force-magnitude",        Int32);
+    ADD_FIELD_INFO("29/15/6",    "min-force-angle",            Uint32);
+    ADD_FIELD_INFO("29/15/7",    "max-force-angle",            Uint32);
+    ADD_FIELD_INFO("29/15/8",    "bottom-dead-spot",           Uint32);
+    ADD_FIELD_INFO("29/15/9",    "top-dead-spot",              Uint32);
+    ADD_FIELD_INFO("29/15/10",    "pedal-power-balance",       Uint32);
+    ADD_FIELD_INFO("29/15/11",    "min-torque-magnitude",      Int32);
+    ADD_FIELD_INFO("29/15/12",    "man-torque-magnitude",      Int32);
+    ADD_FIELD_INFO("29/16",       "right-pedal-power-samples", EmbeddedMessage);
+    ADD_FIELD_INFO("29/16/1",     "current-power",             Int32);
+    ADD_FIELD_INFO("29/16/2",     "cumulative-crank-revs",     Uint32);
+    ADD_FIELD_INFO("29/16/3",     "cumulative-timestamp",      Uint32);
+    ADD_FIELD_INFO("29/16/4",     "min-force-magnitude",       Sint32);
+    ADD_FIELD_INFO("29/16/5",     "max-force-magnitude",       Int32);
+    ADD_FIELD_INFO("29/16/6",     "min-force-angle",           Uint32);
+    ADD_FIELD_INFO("29/16/7",     "max-force-angle",           Uint32);
+    ADD_FIELD_INFO("29/16/8",     "bottom-dead-spot",          Uint32);
+    ADD_FIELD_INFO("29/16/9",     "top-dead-spot",             Uint32);
+    ADD_FIELD_INFO("29/16/10",    "pedal-power-balance",       Uint32);
+    ADD_FIELD_INFO("29/16/11",    "min-torque-magnitude",      Int32);
+    ADD_FIELD_INFO("29/16/12",    "man-torque-magnitude",      Int32);
+    ADD_FIELD_INFO("29/17",       "left-power-calibration",    EmbeddedMessage);
+    ADD_FIELD_INFO("29/17/1",     "start-index",               Uint32);
+    ADD_FIELD_INFO("29/17/2",     "value",                     Float);
+    ADD_FIELD_INFO("29/17/3",     "operation",                 Enumerator); // 1=Multiply, 2=Sum
+    ADD_FIELD_INFO("29/17/4",     "cause",                     Enumerator); // 0=Walk, 1=Run, 2=Stand
+    ADD_FIELD_INFO("29/18",       "right-power-calibration",   EmbeddedMessage);
+    ADD_FIELD_INFO("29/18/1",     "start-index",               Uint32);
+    ADD_FIELD_INFO("29/18/2",     "value",                     Float);
+    ADD_FIELD_INFO("29/18/3",     "operation",                 Enumerator); // 1=Multiply, 2=Sum
+    ADD_FIELD_INFO("29/18/4",     "cause",                     Enumerator); // 0=Walk, 1=Run, 2=Stand
+    ADD_FIELD_INFO("29/19",       "rr-samples",                EmbeddedMessage);
+    ADD_FIELD_INFO("29/19/1",     "rr-intervals",              Uint32);
+    ADD_FIELD_INFO("29/19/2",     "rr-sensor-offline",         EmbeddedMessage);
+    ADD_FIELD_INFO("29/19/2/1",   "start-time",                EmbeddedMessage);
+    ADD_FIELD_INFO("29/19/2/1/1", "hour",                      Uint32);
+    ADD_FIELD_INFO("29/19/2/1/2", "minute",                    Uint32);
+    ADD_FIELD_INFO("29/19/2/1/3", "seconds",                   Uint32);
+    ADD_FIELD_INFO("29/19/2/1/4", "milliseconds",              Uint32);
+    ADD_FIELD_INFO("29/19/2/2",   "time-interval",             EmbeddedMessage);
+    ADD_FIELD_INFO("29/19/2/2/1", "hour",                      Uint32);
+    ADD_FIELD_INFO("29/19/2/2/2", "minute",                    Uint32);
+    ADD_FIELD_INFO("29/19/2/2/3", "seconds",                   Uint32);
+    ADD_FIELD_INFO("29/19/2/2/4", "milliseconds",              Uint32);
+    ADD_FIELD_INFO("29/20",       "acceleration-mad-samples",  Float);
+    ADD_FIELD_INFO("30",          "pause-times",               EmbeddedMessage);
+    ADD_FIELD_INFO("30/1",        "starttime",                 EmbeddedMessage);
+    ADD_FIELD_INFO("30/1/1",      "hours",                     Uint32);
+    ADD_FIELD_INFO("30/1/2",      "minutes",                   Uint32);
+    ADD_FIELD_INFO("30/1/3",      "seconds",                   Uint32);
+    ADD_FIELD_INFO("30/1/4",      "milliseconds",              Uint32);
+    ADD_FIELD_INFO("30/2"  ,      "duration",                  EmbeddedMessage);
+    ADD_FIELD_INFO("30/2/1",      "hours",                     Uint32);
+    ADD_FIELD_INFO("30/2/2",      "minutes",                   Uint32);
+    ADD_FIELD_INFO("30/2/3",      "seconds",                   Uint32);
+    ADD_FIELD_INFO("30/2/4",      "milliseconds",              Uint32);
+
     ProtoBuf::Message parser(fieldInfo);
 
     if (isGzipped(data)) {
@@ -1150,7 +1484,7 @@ QVariantMap TrainingSession::parseStatistics(QIODevice &data) const
     ADD_FIELD_INFO("12/4/3/4", "milliseconds",      Uint32);
     ADD_FIELD_INFO("12/4/4",   "average-heartrate", Uint32);
     ADD_FIELD_INFO("12/4/5",   "maximum-heartate",  Uint32);
-    ADD_FIELD_INFO("12/4/6",   "average-swolf",     Uint32);
+    ADD_FIELD_INFO("12/4/6",   "average-swolf",     Float);
     ADD_FIELD_INFO("12/4/7",   "pool-time",         EmbeddedMessage);
     ADD_FIELD_INFO("12/4/7/1", "hours",             Uint32);
     ADD_FIELD_INFO("12/4/7/2", "minutes",           Uint32);
@@ -1504,9 +1838,44 @@ QString TrainingSession::getOutputBaseFileName(const QString &format)
         fileName.replace(QLatin1String("$sessionId"), inputFileNameParts.cap(2));
     }
 
-    fileName.replace(QLatin1String("$sessionName"),
-        first(firstMap(parsedSession.value(QLatin1String("session-name")))
-            .value(QLatin1String("text"))).toString());
+    // If there are any $sessionName references
+    if (fileName.contains(QStringLiteral("$sessionName"))) {
+        // Fetch the session name from the sesion.
+        QString sessionName = first(firstMap(parsedSession.value(QLatin1String("session-name")))
+                                    .value(QLatin1String("text"))).toString();
+
+        // If session name is empty (eg common for Vantage V), then fallback to the exercise name.
+        if (sessionName.isEmpty()) {
+            // If we haven't parsed the exercise data yet (really only happens in unit test), do so.
+            if (exerciseCount() < 1) {
+                parse();
+            }
+
+            // Build a unique set of sport names from the individual exercises in the session.
+            QSet<QString> sportNames;
+            foreach (const QVariant &exercise, parsedExercises) {
+                const QString sportName = getPolarSportName(first(firstMap(exercise.toMap()
+                    .value(CREATE).toMap().value(QStringLiteral("sport")))
+                    .value(QStringLiteral("value"))).toULongLong());
+                qDebug() << "No session name, found Polar sport name" << sportName;
+                if (!sportName.isNull()) {
+                    sportNames.insert(sportName);
+                }
+            }
+
+            // Pick an appropriate session name from the sport names.
+            if (sportNames.isEmpty()) {
+                qWarning() << "No session name, and no recognised sport names either";
+                sessionName = QStringLiteral("Unknown session");
+            } else if (sportNames.size() > 1) {
+                qWarning() << "No session name, and multiple unique sport names";
+                sessionName = QStringLiteral("Multisport");
+            } else {
+                sessionName = *sportNames.constBegin();
+            }
+        }
+        fileName.replace(QLatin1String("$sessionName"), sessionName);
+    }
     return fileName;
 }
 
@@ -1819,13 +2188,13 @@ QStringList TrainingSession::toHRM(const bool rrDataOnly) const
             ? map.value(RRSAMPLES).toMap().value(QLatin1String("value")).toList()
             : flattenHrvSamplesForHrm(samples);
 
-        const bool haveAltitude     = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("speed"))));
+        const bool haveAltitude     = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("altitude"))));
         const bool haveCadence      = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("cadence"))));
         const bool havePowerLeft    = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("left-pedal-power"))));
         const bool havePowerRight   = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("right-pedal-power"))));
         const bool havePower        = (havePowerLeft || havePowerRight);
         const bool havePowerBalance = havePower;
-        const bool haveSpeed        = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("altitude"))));
+        const bool haveSpeed        = ((!rrDataOnly) && (haveAnySamples(samples, QLatin1String("speed"))));
 
         QString hrmData;
         QTextStream stream(&hrmData);
@@ -2169,25 +2538,41 @@ QStringList TrainingSession::toHRM(const bool rrDataOnly) const
                         ? qRound(altitude.at(index).toFloat()) : (int)0);
                 }
                 if (havePower) {
-                    const int currentPowerLeft = (index < powerLeft.length()) ?
+                    const int currentPowerLeft =
+                            ((index < powerLeft.length()) &&
+                             (!sensorOffline(samples.value(QLatin1String("left-pedal-power-offline")).toList(), index))) ?
                         first(powerLeft.at(index).toMap().value(QLatin1String("current-power"))).toInt() : 0;
-                    const int currentPowerRight = (index < powerRight.length()) ?
+                    const int currentPowerRight =
+                            ((index < powerRight.length()) &&
+                             (!sensorOffline(samples.value(QLatin1String("right-pedal-power-offline")).toList(), index))) ?
                         first(powerRight.at(index).toMap().value(QLatin1String("current-power"))).toInt() : 0;
+                    if (currentPowerLeft < 0) {
+                        qWarning() << "Negative left power sample at index" << index << ":" << currentPowerLeft;
+                    }
+                    if (currentPowerRight < 0) {
+                        qWarning() << "Negative right power sample at index" << index << ":" << currentPowerRight;
+                    }
                     const int currentPower = (havePowerLeft && havePowerRight)
-                        ? currentPowerLeft + currentPowerRight
-                        : (havePowerLeft ? currentPowerLeft : currentPowerRight) * 2;
+                        ? qMax(currentPowerLeft, 0) + qMax(currentPowerRight, 0)
+                        : qMax((havePowerLeft ? currentPowerLeft : currentPowerRight) * 2, 0);
+                    Q_ASSERT(currentPower >= 0); // None of the above branches can yield a negative power.
+                    Q_ASSERT(currentPower >= qMax(currentPowerLeft, 0));
+                    Q_ASSERT(currentPower >= qMax(currentPowerRight, 0));
                     stream << '\t' << currentPower;
                     if (havePowerBalance) {
                         // In case we only have right power, not left.
-                        const int powerLeft = havePowerLeft ? currentPowerLeft : currentPower - currentPowerRight;
+                        const int powerLeft = havePowerLeft ? qMax(currentPowerLeft, 0) : currentPower - qMax(currentPowerRight, 0);
+                        Q_ASSERT(powerLeft >= 0); // Guaranteed by the previous statement, in conjunction with the Q_ASSERTs above.
                         // Convert the left and right powers into a left-right balance percentage.
-                        const int leftBalance = (currentPower == 0) ? 0 :
-                            qRound(100.0 * (float)powerLeft / (float)currentPower);
-                        if (leftBalance > 100) {
-                            qWarning() << "leftBalance of " << leftBalance << "% is greater than 100%";
+                        const int leftBalance = (currentPower == 0)
+                            ? (powerLeft == qMax(currentPowerRight, 0)) ? 50 : (powerLeft < currentPowerRight) ? 0 : 100
+                            : qRound(100.0 * (float)powerLeft / (float)currentPower);
+                        if ((0 > leftBalance) || (leftBalance > 100)) {
+                            qWarning() << "leftBalance of" << leftBalance << "is outside the range 0..100%";
+                            // We enforce the range [0..100] below.
                         }
                         /// @todo Include Pedalling Index here, if/when available.
-                        stream << '\t' << qMax(qMin(leftBalance, 255), 0);
+                        stream << '\t' << qMax(qMin(leftBalance, 100), 0);
                     }
                 }
                 // Air pressure - not available in protobuf data.
@@ -2516,7 +2901,7 @@ QDomDocument TrainingSession::toTCX(const QString &buildTime) const
                 trackPoint.appendChild(doc.createElement(QLatin1String("Extensions")))
                     .appendChild(tpx);
 
-                if ((index < cadence.length()) && (cadence.at(index).toInt() >= 0) &&
+                if ((index < speed.length()) && (speed.at(index).toInt() >= 0) &&
                     (!sensorOffline(samples.value(QLatin1String("speed-offline")).toList(), index))) {
                     tpx.appendChild(doc.createElement(QLatin1String("Speed")))
                         .appendChild(doc.createTextNode(QString::fromLatin1("%1")
@@ -2541,18 +2926,25 @@ QDomDocument TrainingSession::toTCX(const QString &buildTime) const
                     first(powerLeft.at(index).toMap().value(QLatin1String("current-power"))) : QVariant();
                 const QVariant currentPowerRight = (index < powerRight.length()) ?
                     first(powerRight.at(index).toMap().value(QLatin1String("current-power"))) : QVariant();
+                if ((currentPowerLeft.isValid()) && (currentPowerLeft.toInt() < 0)) {
+                    qWarning() << "Negative left power sample at index" << index << ":" << currentPowerLeft.toInt();
+                }
+                if ((currentPowerRight.isValid()) && (currentPowerRight.toInt() < 0)) {
+                    qWarning() << "Negative right power sample at index" << index << ":" << currentPowerRight.toInt();
+                }
 
                 const QVariant currentPower =
                     (currentPowerLeft.isValid() && currentPowerRight.isValid())
-                        ? currentPowerLeft.toInt() + currentPowerRight.toInt()
-                        : currentPowerLeft.isValid() ? currentPowerLeft.toInt() * 2
-                        : currentPowerRight.isValid() ? currentPowerRight.toInt() * 2
+                        ? qMax(currentPowerLeft.toInt(), 0) + qMax(currentPowerRight.toInt(), 0)
+                        : currentPowerLeft.isValid() ? qMax(currentPowerLeft.toInt() * 2, 0)
+                        : currentPowerRight.isValid() ? qMax(currentPowerRight.toInt() * 2, 0)
                         : QVariant();
+                Q_ASSERT(currentPower.toInt() >= 0);
 
                 if (currentPower.isValid()) {
                     tpx.appendChild(doc.createElement(QLatin1String("Watts")))
                         .appendChild(doc.createTextNode(QString::fromLatin1("%1")
-                            .arg(currentPower.toInt())));
+                            .arg(qMax(currentPower.toInt(), 0))));
                 }
 
             }

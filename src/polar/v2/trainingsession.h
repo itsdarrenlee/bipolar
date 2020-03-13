@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2017 Paul Colby
+    Copyright 2014-2019 Paul Colby
 
     This file is part of Bipolar.
 
@@ -111,6 +111,7 @@ protected:
     HrmOptions hrmOptions;
     TcxOptions tcxOptions;
 
+    static QString getPolarSportName(const quint64 &polarSportValue);
     static QString getTcxCadenceSensor(const quint64 &polarSportValue);
     static QString getTcxSport(const quint64 &polarSportValue);
     QString getOutputBaseFileName(const QString &format);

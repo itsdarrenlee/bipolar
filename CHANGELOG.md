@@ -1,8 +1,44 @@
 ## Bipolar Changelog
 
+### 0.5.11 (_unreleased_)
+???
+
+### 0.5.10 (2019-03-16)
+Features:
+- fallback to sport types when session names are absent ([#91](../../issues/91))
+
+Bugs:
+- use x86-64 hook on OSX ([#92](../../issues/92))
+
+Special thanks to @turhake for contributing test data for this release.
+
+### 0.5.9 (2018-10-29)
+Features:
+- compatible with FlowSync 3 ([#89](../../issues/89))
+
+### 0.5.8 (2018-10-21)
+Bugs:
+- check for speed (not cadence) for TCX speed output ([#86](../../pull/86))
+- correct detection of speed and altitude for HRM output ([#86](../../pull/86))
+
+Special thanks to @mz-pdm for contributing to this release.
+
+### 0.5.7 (2017-12-17)
+Features:
+- Les Mills activity types ([b68cccd](../../commit/b68cccdf5990a7ef5ccdb35bcacaaaec565781a4))
+
+Bugs:
+- sanitise power samples ([#81](../../issues/81))
+
+Other:
+- new test data: laps with power ([#46](../../issues/46))
+- new test data: swimming ([#75](../../issues/75))
+
+Special thanks to @remifreiwald for contributing to this release.
+
 ### 0.5.6 (2016-12-17)
 Features:
-* fallback to exercise HRV data ([#42](../../issues/42))
+- fallback to exercise HRV data ([#42](../../issues/42))
 
 Bugs:
 - use metres-per-second for TCX TPX Speed values ([#74](../../issues/74))

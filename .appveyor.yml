@@ -2,34 +2,31 @@ version: '{branch}-{build}'
 
 environment:
   matrix:
-    - QTDIR: C:\Qt\5.3\mingw482_32
-    - QTDIR: C:\Qt\5.3\msvc2013_opengl
-    - QTDIR: C:\Qt\5.3\msvc2013_64_opengl
-    - QTDIR: C:\Qt\5.4\mingw491_32
-    - QTDIR: C:\Qt\5.4\msvc2013_opengl
-    - QTDIR: C:\Qt\5.4\msvc2013_64_opengl
-    - QTDIR: C:\Qt\5.5\mingw492_32
-    - QTDIR: C:\Qt\5.5\msvc2013
-    - QTDIR: C:\Qt\5.5\msvc2013_64
-    - QTDIR: C:\Qt\5.6\mingw49_32
-    - QTDIR: C:\Qt\5.6\msvc2013
-    - QTDIR: C:\Qt\5.6\msvc2013_64
-    - QTDIR: C:\Qt\5.6\msvc2015
-    - QTDIR: C:\Qt\5.6\msvc2015_64
+    # Tip: sed -nre 's|.*Qt/.*/|    - QTDIR: &|p' | tr '/' '\\' | sort -nt. -k1.20,1 -k2,2 -k3
+    - QTDIR: C:\Qt\5.6.3\mingw49_32
+    - QTDIR: C:\Qt\5.6.3\msvc2013
+    - QTDIR: C:\Qt\5.6.3\msvc2013_64
+    - QTDIR: C:\Qt\5.6.3\msvc2015
+    - QTDIR: C:\Qt\5.6.3\msvc2015_64
     - QTDIR: C:\Qt\5.7\mingw53_32
-    - QTDIR: C:\Qt\5.7\msvc2013
-    - QTDIR: C:\Qt\5.7\msvc2013_64
     - QTDIR: C:\Qt\5.7\msvc2015
-    - QTDIR: C:\Qt\5.7\msvc2015_64
-    - QTDIR: C:\Qt\5.8\mingw53_32
-    - QTDIR: C:\Qt\5.8\msvc2013
-    - QTDIR: C:\Qt\5.8\msvc2013_64
-    - QTDIR: C:\Qt\5.8\msvc2015
-    - QTDIR: C:\Qt\5.8\msvc2015_64
-    - QTDIR: C:\Qt\5.9.1\mingw53_32
-    - QTDIR: C:\Qt\5.9.1\msvc2013_64
-    - QTDIR: C:\Qt\5.9.1\msvc2015
-    - QTDIR: C:\Qt\5.9.1\msvc2015_64
+    - QTDIR: C:\Qt\5.9.9\mingw53_32
+    - QTDIR: C:\Qt\5.9.9\msvc2013_64
+    - QTDIR: C:\Qt\5.9.9\msvc2015
+    - QTDIR: C:\Qt\5.9.9\msvc2015_64
+    - QTDIR: C:\Qt\5.10.1\mingw53_32
+    - QTDIR: C:\Qt\5.10.1\msvc2013_64
+    - QTDIR: C:\Qt\5.10.1\msvc2015
+    - QTDIR: C:\Qt\5.10.1\msvc2015_64
+    - QTDIR: C:\Qt\5.11.3\mingw53_32
+    - QTDIR: C:\Qt\5.11.3\msvc2015
+    - QTDIR: C:\Qt\5.11.3\msvc2015_64
+    - QTDIR: C:\Qt\5.12.6\mingw73_32
+    - QTDIR: C:\Qt\5.12.6\mingw73_64
+    - QTDIR: C:\Qt\5.12.6\msvc2015_64
+    - QTDIR: C:\Qt\5.13.2\mingw73_32
+    - QTDIR: C:\Qt\5.13.2\mingw73_64
+    - QTDIR: C:\Qt\5.13.2\msvc2015_64
 
 configuration:
   - debug
@@ -57,10 +54,7 @@ before_build:
 build_script:
   - '%make%'
   - cd %APPVEYOR_BUILD_FOLDER%-build/pkg/nsis
-  # Qt 5.6.2 windeployqt issue (https://bugreports.qt.io/browse/QTBUG-56616)
-  # Remove the following SKIP_NSIS concept if/when AppVeyor gets Qt 5.6.3+
-  - if %QTDIR%==C:\Qt\5.6\mingw49_32 if %CONFIGURATION%==debug set SKIP_NSIS=QTBUG-56616
-  - if defined SKIP_NSIS ( echo Skipping NSIS due to %SKIP_NSIS% ) else %make% nsis
+  - '%make% nsis'
 
 after_build:
   # Add a link to the build output within the source directory. This is needed because AppVeyor does
@@ -88,7 +82,7 @@ deploy:
     on:
       appveyor_repo_tag: true
       configuration: release
-      QTDIR: C:\Qt\5.9.1\msvc2015_64
+      QTDIR: C:\Qt\5.10.1\msvc2015_64
 
 notifications:
   - provider: Webhook
