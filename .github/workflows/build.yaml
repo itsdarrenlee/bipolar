@@ -14,6 +14,8 @@ jobs:
     - name: Install Clang
       if: ${{ contains(matrix.spec, 'clang') }}
       run: sudo apt-get -qy install clang
+    - name: Install Locales
+      run: sudo apt-get -qy install locales-all
     - name: Install Qt
       run: sudo apt-get -qy install qt5-qmake qtbase5-dev libqt5xmlpatterns5-dev
     - name: Build
@@ -39,6 +41,8 @@ jobs:
     - name: Install Clang
       if: ${{ contains(matrix.spec, 'clang') }}
       run: sudo apt-get -qy install clang
+    - name: Install Locales
+      run: sudo apt-get -qy install locales-all
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
