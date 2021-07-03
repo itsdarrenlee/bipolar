@@ -13,6 +13,8 @@ jobs:
         - QMAKESPEC: linux-g++
     steps:
     - uses: actions/checkout@v2
+    - name: Install Qt
+      run: sudo apt-get -qy install qt5-qmake qtbase5-dev libqt5xmlpatterns5-dev
     - name: Build
       run: |
         qmake -o "$RUNNER_TEMP" -spec "$QMAKESPEC" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
