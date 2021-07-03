@@ -101,18 +101,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Qt (mingw)
-      if: ${{ contains(matrix.toolchain, 'mingw') }}
+      if: ${{ contains(matrix.make, 'mingw') }}
       uses: jurplel/install-qt-action@v2
       with:
         version: ${{ matrix.qt }}
         arch: ${{ matrix.arch }}
     - name: Install Qt (msvc)
-      if: ${{ contains(matrix.generator, 'nmake') }}
+      if: ${{ contains(matrix.make, 'nmake') }}
       uses: jurplel/install-qt-action@v2
       with:
         version: ${{ matrix.qt }}
     - name: Configure MSVC
-      if: ${{ contains(matrix.generator, 'nmake') }}
+      if: ${{ contains(matrix.make, 'nmake') }}
       uses: ilammy/msvc-dev-cmd@v1
     - name: Build
       run: |
