@@ -8,16 +8,17 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        env:
-        - QMAKESPEC: linux-clang
-        - QMAKESPEC: linux-g++
+        spec: [ linux-clang, linux-g++ ]
     steps:
     - uses: actions/checkout@v2
+    - name: Install Clang
+      if: ${{ contains(matrix.spec, 'clang') }}
+      run: sudo apt-get -qy install clang
     - name: Install Qt
       run: sudo apt-get -qy install qt5-qmake qtbase5-dev libqt5xmlpatterns5-dev
     - name: Build
       run: |
-        qmake -o "$RUNNER_TEMP" -spec "$QMAKESPEC" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
+        qmake -o "$RUNNER_TEMP" -spec "${{ matrix.spec }}" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
         make -C "$RUNNER_TEMP"
     - name: Test (default locale)
       run: make -C "$RUNNER_TEMP" check
@@ -32,18 +33,19 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         qt: [ '5.9.9', '5.12.11', '5.15.2' ]
-        env:
-        - QMAKESPEC: linux-clang
-        - QMAKESPEC: linux-g++
+        spec: [ linux-clang, linux-g++ ]
     steps:
     - uses: actions/checkout@v2
+    - name: Install Clang
+      if: ${{ contains(matrix.spec, 'clang') }}
+      run: sudo apt-get -qy install clang
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         version: ${{ matrix.qt }}
     - name: Build
       run: |
-        qmake -o "$RUNNER_TEMP" -spec "$QMAKESPEC" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
+        qmake -o "$RUNNER_TEMP" -spec "${{ matrix.spec }}" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
         make -C "$RUNNER_TEMP"
     - name: Test (default locale)
       run: make -C "$RUNNER_TEMP" check
@@ -58,9 +60,7 @@ jobs:
       matrix:
         os: [ macOs-latest ]
         qt: [ '5.9.9', '5.12.11', '5.15.2' ]
-        env:
-        - QMAKESPEC: macx-clang
-        - QMAKESPEC: macx-g++
+        spec: [ linux-clang, linux-g++ ]
     steps:
     - uses: actions/checkout@v2
     - name: Install Qt
@@ -69,7 +69,7 @@ jobs:
         version: ${{ matrix.qt }}
     - name: Build
       run: |
-        qmake -o "$RUNNER_TEMP" -spec "$QMAKESPEC" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
+        qmake -o "$RUNNER_TEMP" -spec "${{ matrix.spec }}" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
         make -C "$RUNNER_TEMP"
     - name: Test (default locale)
       run: make -C "$RUNNER_TEMP" check
