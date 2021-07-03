@@ -66,7 +66,9 @@ jobs:
       matrix:
         os: [ macOs-latest ]
         qt: [ '5.9.9', '5.12.11', '5.15.2' ]
-        spec: [ macx-clang, macx-g++ ]
+        env:
+        - { cc: clang, cxx: clang++, spec: macx-clang }
+        - { cc: gcc-11, cxx: g++-11, spec: macx-g++ }
     steps:
     - uses: actions/checkout@v2
     - name: Install Qt
@@ -74,9 +76,12 @@ jobs:
       with:
         version: ${{ matrix.qt }}
     - name: Build
+      env:
+        CC:  ${{ matrix.env.cc }}
+        CXX: ${{ matrix.env.cxx }}
       run: |
         qmake -v
-        qmake -o "$RUNNER_TEMP" -spec "${{ matrix.spec }}" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
+        qmake -o "$RUNNER_TEMP" -spec "${{ matrix.env.spec }}" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "$GITHUB_WORKSPACE"
         make -C "$RUNNER_TEMP"
     - name: Test (default locale)
       run: make -C "$RUNNER_TEMP" check
