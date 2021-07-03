@@ -115,18 +115,19 @@ jobs:
       if: ${{ contains(matrix.make, 'nmake') }}
       uses: ilammy/msvc-dev-cmd@v1
     - name: Build
+      working-directory: ${{ runner.temp }}
       run: |
         set
         dir "%Qt5_DIR%"
         dir "%Qt5_DIR%\bin\"
         "%Qt5_DIR%\bin\qmake" -v
         "%Qt5_DIR%\bin\qmake" -o "%RUNNER_TEMP%" -recursive -Wall -Wlogic -Wparser CONFIG+=debug_and_release "%GITHUB_WORKSPACE%"
-        ${{ matrix.make }} -C "%RUNNER_TEMP%"
+        ${{ matrix.make }}
     - name: Test (default locale)
       working-directory: ${{ runner.temp }}
       run: ${{ matrix.make }} check
     - name: Test (non-EN locale)
-      working-directory: ${{ runner.temp }}
       env:
         BIPOLAR_TEST_LOCALE: de_DE.UTF-8
+      working-directory: ${{ runner.temp }}
       run: ${{ matrix.make }} check
